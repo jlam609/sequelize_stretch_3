@@ -8,5 +8,14 @@ const Person = db.define('Person', {
       notEmpty: true,
     },
   },
+  findWithRecipes:() => {
+    return Recipe.findall({
+      where:{
+        PersonId: this.id
+      }
+    })
+  }
 });
+
+
 module.exports = Person;
