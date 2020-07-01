@@ -5,12 +5,17 @@ const Recipe = require('./recipe');
 Recipe.belongsTo(Person)
 Person.hasMany(Recipe)
 
-Person.prototype.findWithRecipes = function(){
-    console.log(this.name)
-    return Recipe.findAll({
-      where:{
-        PersonId: this.name
-      }
+Person.findWithRecipes = function(){
+    return Person.findAll({
+      include: [{model:Recipe}]
     })
-  }
+}
+
+Person.prototype.writeRecipe = function(recipe){
+    return Recipe.create({
+        ...recipe,
+        PersonId: this.id
+    })
+}
+  
 module.exports = { Person, Recipe };
